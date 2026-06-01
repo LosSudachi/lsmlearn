@@ -1,293 +1,363 @@
 <!DOCTYPE html>
-
-<html class="light" lang="es"><head>
+<html lang="es">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-variant": "#dae2fd",
-                        "error": "#ba1a1a",
-                        "tertiary-fixed": "#ffddb8",
-                        "on-error": "#ffffff",
-                        "background": "#faf8ff",
-                        "outline-variant": "#c2c6d6",
-                        "on-secondary-fixed-variant": "#005236",
-                        "secondary-container": "#6cf8bb",
-                        "on-primary": "#ffffff",
-                        "on-tertiary-fixed": "#2a1700",
-                        "secondary-fixed": "#6ffbbe",
-                        "tertiary-fixed-dim": "#ffb95f",
-                        "inverse-on-surface": "#eef0ff",
-                        "secondary-fixed-dim": "#4edea3",
-                        "surface-container-highest": "#dae2fd",
-                        "on-primary-container": "#fefcff",
-                        "on-surface": "#131b2e",
-                        "inverse-primary": "#adc6ff",
-                        "on-primary-fixed": "#001a42",
-                        "error-container": "#ffdad6",
-                        "surface-container-low": "#f2f3ff",
-                        "secondary": "#006c49",
-                        "surface-tint": "#005ac2",
-                        "primary-fixed-dim": "#adc6ff",
-                        "on-tertiary-container": "#fffbff",
-                        "on-tertiary": "#ffffff",
-                        "tertiary-container": "#a36700",
-                        "on-background": "#131b2e",
-                        "outline": "#727785",
-                        "on-secondary-container": "#00714d",
-                        "on-primary-fixed-variant": "#004395",
-                        "primary": "#0058be",
-                        "surface-container-lowest": "#ffffff",
-                        "surface": "#faf8ff",
-                        "surface-container-high": "#e2e7ff",
-                        "surface-bright": "#faf8ff",
-                        "on-secondary": "#ffffff",
-                        "primary-fixed": "#d8e2ff",
-                        "on-tertiary-fixed-variant": "#653e00",
-                        "primary-container": "#2170e4",
-                        "surface-container": "#eaedff",
-                        "on-error-container": "#93000a",
-                        "on-secondary-fixed": "#002113",
-                        "tertiary": "#825100",
-                        "surface-dim": "#d2d9f4",
-                        "inverse-surface": "#283044",
-                        "on-surface-variant": "#424754"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "gutter": "24px",
-                        "unit": "8px",
-                        "margin": "40px",
-                        "container-max": "1280px"
-                    },
-                    "fontFamily": {
-                        "body-md": ["Inter"],
-                        "headline-lg": ["Lexend"],
-                        "label-lg": ["Inter"],
-                        "display-lg": ["Lexend"],
-                        "body-lg": ["Inter"],
-                        "headline-md": ["Lexend"],
-                        "label-md": ["Inter"]
-                    },
-                    "fontSize": {
-                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
-                        "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                        "display-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
-                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
-                        "label-md": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}]
-                    }
-                }
-            }
-        }
-    </script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Práctica · LSM Learn</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet"/>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .landmark-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #6cf8bb;
-            border-radius: 50%;
-            position: absolute;
-            box-shadow: 0 0 8px rgba(108, 248, 187, 0.8);
-        }
-        .landmark-line {
-            position: absolute;
-            background-color: rgba(108, 248, 187, 0.4);
-            height: 2px;
-            transform-origin: left center;
-        }
-        .pulse-border {
-            border: 2px solid #0058be;
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; border-color: #0058be; }
-            50% { opacity: .5; border-color: #adc6ff; }
-        }
-        .loader-ring {
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left-color: #6cf8bb;
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-        }
-    </style>
+  :root{--ink:#15182B;--muted:#6B7180;--paper:#FBFAF7;--card:#FFFFFF;--line:#ECE9E1;--line-2:#E2DFD6;
+    --blue:#1357E6;--blue-d:#0E47BD;--blue-t:#E7EEFF;--green:#0E9E6E;--green-t:#DCF7EC;
+    --amber:#E8830C;--amber-t:#FDEAD2;--rose:#E5484D;--rose-t:#FCE4E4;--r-lg:24px;--r-md:18px;
+    --shadow:0 1px 2px rgba(21,24,43,.04),0 12px 30px -14px rgba(21,24,43,.14);
+    --shadow-lg:0 2px 4px rgba(21,24,43,.05),0 34px 64px -28px rgba(21,24,43,.24);}
+  *{box-sizing:border-box;} html,body{margin:0;overflow-x:hidden;}
+  body{background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  .disp{font-family:'Bricolage Grotesque','Plus Jakarta Sans',sans-serif;font-weight:700;letter-spacing:-.02em;}
+  .ms{font-family:'Material Symbols Rounded';line-height:1;display:inline-block;}.ms.fill{font-variation-settings:'FILL' 1;}
+  .bg-deco{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;}
+  .bg-deco span{position:absolute;border-radius:9999px;filter:blur(80px);opacity:.5;}
+  .bg-deco .b1{width:480px;height:480px;left:-160px;top:-120px;background:radial-gradient(circle,#cfe0ff,transparent 70%);}
+  .bg-deco .b2{width:440px;height:440px;right:-140px;bottom:-160px;background:radial-gradient(circle,#ffe3c2,transparent 70%);}
+  .grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.4;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");}
+  .nav-link{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;color:var(--muted);font-weight:600;font-size:14px;text-decoration:none;position:relative;transition:.18s;}
+  .nav-link:hover{background:#fff;color:var(--ink);}.nav-link .ms{font-size:22px;}
+  .nav-link.active{background:var(--blue-t);color:var(--blue-d);}
+  .nav-link.active::before{content:"";position:absolute;left:-3px;top:50%;transform:translateY(-50%);width:4px;height:22px;border-radius:9999px;background:var(--blue);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:9999px;font-size:12px;font-weight:700;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-family:inherit;font-weight:700;border-radius:14px;transition:transform .12s,background .18s,opacity .18s;}
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--blue);color:#fff;padding:12px 20px;box-shadow:0 10px 24px -10px rgba(19,87,230,.7);}
+  .btn-primary:hover{background:var(--blue-d);}
+  .btn-soft{background:#fff;color:var(--ink);border:1px solid var(--line-2);padding:12px 18px;}
+  .btn-soft:hover{border-color:var(--blue);color:var(--blue-d);}
+  /* Layout robusto: nunca desborda, columna derecha envuelve abajo si falta espacio */
+  .wrap{display:flex;flex-wrap:wrap;gap:22px;max-width:1180px;margin:0 auto;}
+  .col-main{flex:3 1 460px;min-width:0;display:flex;flex-direction:column;gap:18px;}
+  .col-side{flex:1 1 280px;min-width:0;max-width:360px;display:flex;flex-direction:column;gap:18px;}
+  /* Cámara */
+  .cam{position:relative;width:100%;aspect-ratio:16/10;border-radius:var(--r-lg);overflow:hidden;
+    background:radial-gradient(120% 120% at 50% 0%,#1c2540,#0c1124 60%,#080b18);box-shadow:var(--shadow-lg);}
+  .cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:none;}
+  .cam.live video{display:block;}
+  .reticle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(46%,260px);aspect-ratio:3/4;border:2px dashed rgba(255,255,255,.35);border-radius:28px;}
+  .reticle span{position:absolute;width:24px;height:24px;border:3px solid #6fffc4;}
+  .reticle .tl{top:-2px;left:-2px;border-right:none;border-bottom:none;border-radius:12px 0 0 0;}
+  .reticle .tr{top:-2px;right:-2px;border-left:none;border-bottom:none;border-radius:0 12px 0 0;}
+  .reticle .bl{bottom:-2px;left:-2px;border-right:none;border-top:none;border-radius:0 0 0 12px;}
+  .reticle .br{bottom:-2px;right:-2px;border-left:none;border-top:none;border-radius:0 0 12px 0;}
+  .cam canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;}
+  .conf-track{height:7px;border-radius:9999px;background:rgba(255,255,255,.18);overflow:hidden;}
+  .conf-bar{height:100%;border-radius:9999px;background:#6fffc4;width:0%;transition:width .12s linear;}
+  .glass{background:rgba(11,16,33,.6);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);}
+  .live-dot{width:8px;height:8px;border-radius:9999px;background:#6fffc4;box-shadow:0 0 0 0 rgba(111,255,196,.6);animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(111,255,196,.55);}70%{box-shadow:0 0 0 9px rgba(111,255,196,0);}100%{box-shadow:0 0 0 0 rgba(111,255,196,0);}}
+  .letter-pill{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;border:1px solid var(--line-2);background:#fff;color:var(--muted);cursor:pointer;transition:.15s;flex:none;}
+  .letter-pill.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .letter-pill.done{background:var(--green-t);color:var(--green);border-color:#bfeeda;}
+  .ref-box{aspect-ratio:1;border-radius:18px;position:relative;overflow:hidden;background:radial-gradient(130% 130% at 30% 20%,#eef3ff,#dee8ff);display:flex;align-items:center;justify-content:center;}
+  .ref-box img{width:100%;height:100%;object-fit:cover;}
+  ::-webkit-scrollbar{height:8px;width:8px;}::-webkit-scrollbar-thumb{background:#d9d5cb;border-radius:9999px;}
+</style>
 </head>
-<body class="bg-background font-body-md text-on-background min-h-screen overflow-hidden">
-<!-- SideNavBar -->
-<aside class="fixed left-0 top-0 h-full flex flex-col z-40 bg-white border-r border-slate-100 shadow-[0px_4px_20px_rgba(15,23,42,0.05)] w-20 md:w-64 transition-all duration-300">
-<div class="px-6 mb-8 mt-6">
-<span class="text-2xl font-extrabold text-blue-600 hidden md:block">LSM Learn</span>
-<span class="text-2xl font-extrabold text-blue-600 md:hidden">L</span>
-</div>
-<nav class="flex-1 flex flex-col gap-1 px-3">
+<body>
+<div class="bg-deco"><span class="b1"></span><span class="b2"></span></div>
+<div class="grain"></div>
 
-<!-- Active State: Práctica -->
-<a class="flex items-center gap-4 p-3 rounded-lg text-blue-600 border-r-4 border-blue-600 bg-blue-50/50 transition-all duration-200 active:scale-[0.98]" href="index.html">
-<span class="material-symbols-outlined" data-icon="exercise" data-weight="fill" style="font-variation-settings: 'FILL' 1;">exercise</span>
-<span class="hidden md:block font-lexend text-sm font-medium">Práctica</span>
-</a>
-<a class="flex items-center gap-4 p-3 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all duration-200" href="diccionario.html">
-<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
-<span class="hidden md:block font-lexend text-sm font-medium">Biblioteca</span>
-</a>
-<a class="flex items-center gap-4 p-3 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all duration-200" href="progreso.html">
-<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
-<span class="hidden md:block font-lexend text-sm font-medium">Progreso</span>
-</a>
-</nav>
-
+<aside class="fixed left-0 top-0 h-full z-40 flex flex-col bg-white/70 backdrop-blur-xl border-r border-[var(--line)] w-20 md:w-64">
+  <div class="flex items-center gap-2 px-5 h-20">
+    <div class="w-10 h-10 rounded-xl bg-[var(--blue)] text-white flex items-center justify-center shadow-[0_8px_18px_-8px_rgba(19,87,230,.8)]"><span class="ms fill" style="font-size:24px;">sign_language</span></div>
+    <span class="disp text-xl hidden md:block">LSM Learn</span>
+  </div>
+  <nav class="flex-1 flex flex-col gap-1.5 px-3 mt-2">
+    <a class="nav-link active" href="index.html"><span class="ms fill">model_training</span><span class="hidden md:block">Práctica</span></a>
+    <a class="nav-link" href="diccionario.html"><span class="ms">menu_book</span><span class="hidden md:block">Biblioteca</span></a>
+    <a class="nav-link" href="progreso.html"><span class="ms">monitoring</span><span class="hidden md:block">Progreso</span></a>
+    <a class="nav-link" href="entrenar.html"><span class="ms">tune</span><span class="hidden md:block">Entrenar</span></a>
+  </nav>
+  <div class="p-3 hidden md:block">
+    <div class="rounded-2xl p-4 bg-[var(--blue-t)] border border-[#d4e0ff]">
+      <p class="text-xs font-bold text-[var(--blue-d)] flex items-center gap-1.5"><span class="ms" style="font-size:16px;">touch_app</span> Navega sin manos</p>
+      <p class="text-xs text-[var(--muted)] mt-1 leading-relaxed">Gestos, o teclas <b>1·2·3</b>. Toca <b>?</b> abajo.</p>
+    </div>
+  </div>
 </aside>
-<!-- TopAppBar -->
-<header class="fixed top-0 right-0 left-20 md:left-64 h-16 px-8 flex justify-between items-center z-30 bg-slate-50/80 backdrop-blur-md border-b border-slate-200/50">
-<div class="flex flex-col">
-<h1 class="text-lg font-bold text-slate-900 font-headline-md leading-none">Sesión de Práctica</h1>
-<span class="text-xs text-slate-500">Lengua de Señas Mexicana (LSM)</span>
-</div>
 
+<header class="fixed top-0 right-0 left-20 md:left-64 h-20 px-5 md:px-8 flex items-center justify-between z-30 bg-[var(--paper)]/85 backdrop-blur-md border-b border-[var(--line)]">
+  <div class="min-w-0">
+    <div class="flex items-center gap-2 text-[var(--muted)] text-[11px] font-semibold uppercase tracking-wider mb-0.5"><span class="live-dot" style="background:var(--green);box-shadow:none;animation:none;"></span> Sesión</div>
+    <h1 class="disp text-xl md:text-2xl leading-none truncate">Práctica de deletreo</h1>
+  </div>
+  <div class="flex items-center gap-3 flex-none">
+    <div class="hidden sm:flex items-center gap-3 card px-4 py-2.5" style="border-radius:14px;">
+      <span class="ms text-[var(--amber)] fill" style="font-size:20px;">local_fire_department</span>
+      <div class="leading-tight"><p class="text-[10px] text-[var(--muted)] font-semibold uppercase">Racha</p><p class="disp text-sm" id="hd-streak">0 días</p></div>
+    </div>
+    <button class="btn btn-soft" style="padding:10px 12px;" aria-label="Perfil"><span class="ms">account_circle</span></button>
+  </div>
 </header>
-<!-- Main Canvas Area -->
-<main class="ml-20 md:ml-64 pt-16 h-screen flex flex-col md:flex-row overflow-hidden">
-<!-- Left: Camera Feed Cluster -->
-<section class="flex-1 p-6 flex flex-col gap-6">
-<!-- Instruction Banner -->
-<div class="bg-primary px-6 py-4 rounded-xl shadow-lg flex items-center justify-between text-on-primary">
-<div class="flex items-center gap-4">
-<div class="bg-on-primary/20 p-2 rounded-lg">
-<span class="material-symbols-outlined" data-icon="front_hand">front_hand</span>
-</div>
-<div>
-<p class="font-label-lg uppercase tracking-wider opacity-80">Tarea Actual</p>
-<h2 class="font-headline-md">Haz la seña: Letra A</h2>
-</div>
-</div>
-<div class="flex flex-col items-end">
-<p class="font-label-md">3/10 letras validadas</p>
-<div class="w-32 h-2 bg-on-primary/20 rounded-full mt-1 overflow-hidden">
-<div class="h-full bg-secondary-container w-[30%]"></div>
-</div>
-</div>
-</div>
-<!-- Main Feed Container -->
-<div class="relative flex-1 bg-black rounded-2xl overflow-hidden shadow-[0px_4px_30px_rgba(15,23,42,0.15)] group">
-<!-- Background Image (Simulated Camera Feed) -->
-<div class="absolute inset-0 bg-cover bg-center" data-alt="POV of a student's hands being recorded by a web camera in a brightly lit modern office setting with blurred plants in background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA6VlDGw09VEyrwUqLmk_l_GQhkxEX2i4OVGBoUyj6uyDLebg3Om09pnrBrCOP7ISo3ttC7cL4QiiyhIbRG3b6l-V1_epbvRVsDAJssTb_VYZh0VhA14Y3VDFldWCIKeJPKF9mTUMf8OCcUqkL0g_glqGEtO-DyU8ZjPCFw3uChpNvdoWvCK-rBd8EUd5k1DN1caV0UbqzoALxgUGiJ0wmKjcY1ppI9jWNo3S143v024qBgWxOJt4EAtoQvQ1rOsyUgoK0Pr-7fqUw')"></div>
-<!-- Landmark Overlay -->
-<div class="absolute inset-0 pointer-events-none">
-<!-- Focus Box -->
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-80 border-2 border-dashed border-primary/40 rounded-3xl"></div>
-<!-- Pulsing Detection Border -->
-<div class="absolute inset-4 rounded-xl pulse-border pointer-events-none"></div>
-<!-- Simulated Landmarks for 'A' -->
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-<div class="landmark-dot" style="top: 0px; left: 0px;"></div>
-<div class="landmark-dot" style="top: 40px; left: -30px;"></div>
-<div class="landmark-dot" style="top: 100px; left: -20px;"></div>
-<div class="landmark-dot" style="top: 100px; left: 20px;"></div>
-<div class="landmark-dot" style="top: 40px; left: 30px;"></div>
-<div class="landmark-dot" style="top: -20px; left: -25px;"></div>
-<div class="landmark-dot" style="top: -20px; left: -5px;"></div>
-<div class="landmark-dot" style="top: -20px; left: 15px;"></div>
-<div class="landmark-dot" style="top: -20px; left: 35px;"></div>
-<div class="landmark-dot" style="top: 20px; left: -60px;"></div>
-</div>
-</div>
-<!-- Validation Overlay -->
-<div class="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] flex items-center justify-center">
-<div class="bg-white/95 p-6 rounded-2xl flex flex-col items-center shadow-2xl">
-<div class="loader-ring animate-spin mb-4"></div>
-<p class="font-headline-md text-primary">Validando...</p>
-<p class="text-on-surface-variant text-sm mt-1">Mantén la posición por 2 segundos</p>
-</div>
-</div>
-<!-- Real-time Feedback Bar -->
-<div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90%] bg-surface/90 backdrop-blur-md p-4 rounded-xl shadow-xl flex items-center justify-between border border-white/50">
-<div class="flex items-center gap-4">
-<div class="flex items-center justify-center w-12 h-12 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full">
-<span class="material-symbols-outlined font-bold" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-<div>
-<p class="font-label-lg text-secondary">Detección: 85% Confianza</p>
-<p class="font-body-md font-semibold text-on-surface">¡Mantén la posición!</p>
-</div>
-</div>
-<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-lg hover:opacity-90 transition-opacity">
-                    Omitir
-                </button>
-</div>
-</div>
-</section>
-<!-- Right: Reference & Progress Panel -->
-<aside class="w-full md:w-80 p-6 flex flex-col gap-6 bg-surface-container-low/50 border-l border-slate-200/50">
-<!-- Reference Illustration Card -->
-<div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
-<div class="flex items-center justify-between mb-4">
-<h3 class="font-headline-md text-slate-800">Guía Visual</h3>
-<span class="bg-tertiary-fixed text-on-tertiary-fixed-variant text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter">Referencia</span>
-</div>
-<div class="aspect-square bg-slate-50 rounded-xl flex items-center justify-center mb-4 overflow-hidden">
-<img alt="Seña de la letra A en Lengua de Señas Mexicana" class="w-full h-full object-cover" data-alt="Realistic close-up photo of a person performing the hand sign for the letter A in Mexican Sign Language (LSM) against a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByzOMuXNjM4CZYuvF2eRv13Z5cuEip8me0w-3OTuvg12GUqxR8pCkufrcb4XobrVsyzuLNEq1nKTvpICDjrkazaDP35nJiYhMdza6L7FkZz9p7lHad1RB-sJ0o6TIb0sM5KWnA9XpS1kyB6GhxpPurMwE1BX8-XEEpPSZVXHdWkdS9BqbL2Hh_5G6rGeuLZeyX-mSP6E0yUQYPZgvBTjtYNRSXRcYjF3My0eBSPSdnzFhf-sY4m19EQKH-I380dutDXOMzXYQtqP0"/>
-</div>
-<div class="space-y-2">
-<p class="text-sm font-semibold text-slate-700">Consejos de ejecución:</p>
-<ul class="text-xs text-slate-500 space-y-1.5 list-disc pl-4">
-<li>Cierra el puño firmemente.</li>
-<li>Mantén el pulgar extendido al costado del dedo índice.</li>
-<li>Asegúrate de que la palma esté frente a la cámara.</li>
-</ul>
-</div>
-</div>
-<!-- Session Stats Bento -->
-<div class="grid grid-cols-1 gap-4 flex-1">
-<div class="bg-surface-container-high p-4 rounded-2xl flex flex-col justify-between">
-<span class="material-symbols-outlined text-primary mb-2" data-icon="timer">timer</span>
-<div>
-<p class="text-xs text-on-surface-variant font-medium">Tiempo Transcurrido</p>
-<p class="text-xl font-bold font-lexend">08:45</p>
-</div>
-</div>
-<div class="bg-surface-container-high p-4 rounded-2xl flex flex-col justify-between">
-<span class="material-symbols-outlined text-secondary mb-2" data-icon="bolt">bolt</span>
-<div>
-<p class="text-xs text-on-surface-variant font-medium">Racha Actual</p>
-<p class="text-xl font-bold font-lexend">4 Correctas</p>
-</div>
-</div>
-<div class="bg-surface-container-high p-4 rounded-2xl flex flex-col justify-between">
-<span class="material-symbols-outlined text-tertiary-container mb-2" data-icon="psychology">psychology</span>
-<div>
-<p class="text-xs text-on-surface-variant font-medium">Nivel de Enfoque</p>
-<p class="text-xl font-bold font-lexend">Óptimo</p>
-</div>
-</div>
-</div>
-<!-- Bottom Actions -->
-<div class="mt-auto space-y-3">
-<button class="w-full bg-white border-2 border-primary text-primary py-3 rounded-xl font-headline-md text-sm hover:bg-primary/5 transition-colors">
-                Pausar Sesión
+
+<main class="ml-20 md:ml-64 pt-20 min-h-screen">
+  <div class="px-5 md:px-8 py-6">
+    <div class="wrap">
+
+      <!-- Columna principal -->
+      <div class="col-main">
+        <!-- Banner: sin modelo -->
+        <a id="model-banner" href="entrenar.html" class="card p-3.5 flex items-center justify-between gap-3 hidden" style="border-radius:var(--r-md);background:var(--amber-t);border-color:#f3dcae;text-decoration:none;">
+          <span class="text-sm text-[var(--amber)] font-semibold flex items-center gap-2"><span class="ms">neurology</span> Registra señas en “Entrenar” para activar el reconocimiento automático.</span>
+          <span class="btn flex-none" style="background:var(--amber);color:#fff;padding:9px 14px;">Entrenar</span>
+        </a>
+        <!-- Objetivo -->
+        <div class="card p-4 flex items-center justify-between gap-3" style="border-radius:var(--r-md);">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-12 h-12 rounded-2xl bg-[var(--blue-t)] text-[var(--blue-d)] flex items-center justify-center disp flex-none" id="goal-letter" style="font-size:26px;">A</div>
+            <div class="min-w-0"><p class="text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">Letra a practicar</p><h2 class="disp text-lg leading-tight truncate">Forma la seña “<span id="goal-name">A</span>”</h2></div>
+          </div>
+          <div class="text-right flex-none"><p class="text-sm font-bold"><span id="goal-done">0</span> / 27</p>
+            <div class="w-28 h-2 rounded-full bg-[var(--line)] mt-1.5 overflow-hidden"><div class="h-full rounded-full bg-[var(--blue)]" id="goal-bar" style="width:0%"></div></div></div>
+        </div>
+
+        <!-- Cámara real -->
+        <div class="cam" id="cam">
+          <video id="video" playsinline autoplay muted></video>
+          <canvas id="overlay"></canvas>
+          <div class="reticle" id="reticle"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+
+          <div class="absolute top-3 left-3 right-3 flex items-center justify-between">
+            <div class="glass rounded-full px-3 py-1.5 flex items-center gap-2 text-white text-xs font-semibold" id="cam-chip"><span class="ms" style="font-size:16px;">videocam_off</span> Cámara apagada</div>
+            <button class="glass rounded-full w-9 h-9 flex items-center justify-center text-white hidden" id="cam-stop" aria-label="Detener cámara"><span class="ms" style="font-size:18px;">stop</span></button>
+          </div>
+
+          <!-- Estado inicial / mensajes -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6" id="cam-overlay">
+            <button id="start-btn" class="w-18 h-18 rounded-full bg-white text-[var(--blue)] flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-transform mb-4" style="width:72px;height:72px;">
+              <span class="ms fill" style="font-size:38px;">videocam</span>
             </button>
-<button class="w-full bg-error text-on-error py-3 rounded-xl font-headline-md text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-sm" data-icon="close">close</span>
-                Terminar
-            </button>
-</div>
-</aside>
+            <h3 class="disp text-white text-lg" id="ov-title">Enciende la cámara para practicar</h3>
+            <p class="text-white/70 text-sm mt-1 max-w-xs" id="ov-sub">Te pedirá permiso para usar tu cámara. Coloca la mano dentro del marco.</p>
+          </div>
+
+          <!-- Barra honesta inferior -->
+          <div class="absolute bottom-3 left-3 right-3 glass rounded-2xl p-3 flex items-center justify-between gap-3 hidden" id="cam-bar">
+            <div class="flex items-center gap-3 min-w-0 flex-1">
+              <div class="w-11 h-11 rounded-xl overflow-hidden bg-white flex-none"><img id="cam-ref" src="signs/A.png" alt="Seña a imitar" style="width:100%;height:100%;object-fit:contain;padding:3px;"></div>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2"><p class="text-white text-sm font-bold truncate" id="val-title">Imita la seña de “<span id="cam-ref-letter">A</span>”</p><span class="text-xs font-bold flex-none" id="val-pct" style="color:#6fffc4;"></span></div>
+                <div class="conf-track mt-1.5"><div class="conf-bar" id="val-bar"></div></div>
+                <p class="text-white/55 text-[11px] truncate mt-1" id="val-hint"></p>
+              </div>
+            </div>
+            <button class="btn flex-none" id="mark-done" style="background:rgba(255,255,255,.16);color:#fff;padding:10px 14px;"><span class="ms" style="font-size:18px;">check</span> Marcar</button>
+          </div>
+        </div>
+
+        <!-- Selector de letras -->
+        <div class="card p-3.5" style="border-radius:var(--r-md);">
+          <div class="flex items-center justify-between mb-3 px-1"><p class="text-sm font-bold">Salta a una letra</p><span class="text-xs text-[var(--muted)]">Abecedario LSM</span></div>
+          <div class="flex gap-2 overflow-x-auto pb-1" id="letter-strip"></div>
+        </div>
+      </div>
+
+      <!-- Columna lateral -->
+      <div class="col-side">
+        <!-- Seña de referencia -->
+        <div class="card overflow-hidden">
+          <div class="flex items-center justify-between p-4 pb-3"><h3 class="disp text-base">Seña de “<span id="ref-letter">A</span>”</h3><span class="chip" style="background:var(--amber-t);color:var(--amber);">Referencia</span></div>
+          <div class="mx-4 ref-box">
+            <img id="sign-img" alt="Seña de la letra en LSM" src="signs/A.png"/>
+            <div id="sign-missing" class="absolute inset-0 flex flex-col items-center justify-center text-center px-4" style="background:repeating-linear-gradient(45deg,#eef3ff,#eef3ff 10px,#e6edff 10px,#e6edff 20px);">
+              <span class="ms" style="font-size:42px;color:var(--blue-d);opacity:.5;">image</span>
+              <p class="text-xs font-bold mt-2" style="color:var(--blue-d);">Falta la imagen de la seña</p>
+              <p class="text-[11px] text-[var(--muted)] mt-1 leading-snug">Coloca un archivo verificado en<br><code style="font-size:11px;">signs/<span id="ref-file">A</span>.png</code></p>
+            </div>
+          </div>
+          <div class="p-4">
+            <p class="text-sm font-bold mb-2">Cómo hacerla</p>
+            <ul class="space-y-2 text-sm text-[var(--muted)]" id="tips">
+              <li class="flex gap-2"><span class="ms text-[var(--green)] flex-none" style="font-size:18px;">check_circle</span> Mira la referencia y replica la forma.</li>
+              <li class="flex gap-2"><span class="ms text-[var(--green)] flex-none" style="font-size:18px;">check_circle</span> Mantén la mano dentro del marco.</li>
+              <li class="flex gap-2"><span class="ms text-[var(--green)] flex-none" style="font-size:18px;">check_circle</span> Palma de frente a la cámara.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Datos reales de sesión -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="card p-4" style="border-radius:var(--r-md);"><span class="ms text-[var(--blue)]" style="font-size:22px;">timer</span><p class="text-xs text-[var(--muted)] font-semibold mt-1">Sesión</p><p class="disp text-lg" id="st-session">00:00</p></div>
+          <div class="card p-4" style="border-radius:var(--r-md);"><span class="ms text-[var(--green)]" style="font-size:22px;">verified</span><p class="text-xs text-[var(--muted)] font-semibold mt-1">Dominadas</p><p class="disp text-lg"><span id="st-done">0</span>/27</p></div>
+          <div class="card p-4 col-span-2" style="border-radius:var(--r-md);"><div class="flex items-center justify-between"><div><p class="text-xs text-[var(--muted)] font-semibold">Tiempo total</p><p class="disp text-xl" id="st-total">0 min</p></div><span class="ms text-[var(--amber)] fill" style="font-size:26px;">schedule</span></div></div>
+        </div>
+
+        <div class="flex flex-col gap-2.5">
+          <button class="btn btn-soft w-full" id="reset-btn"><span class="ms" style="font-size:18px;">restart_alt</span> Reiniciar mi progreso</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
+
+<script src="lsm-data.js"></script>
+<script src="sign-recognizer.js"></script>
+<script>
+  const D = window.LSMData;
+  const R = window.SignRecognizer;
+  const signFile = l => l==='Ñ' ? 'Ntilde' : l;
+  let current = D.nextPending();
+
+  // ---------- UI: letras, objetivo, referencia, stats ----------
+  const strip = document.getElementById('letter-strip');
+  const fmt = (s) => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+
+  function renderStrip(){
+    strip.innerHTML = D.ALPHABET.map(l => {
+      const st = D.status(l);
+      const cls = l===current ? 'active' : st==='done' ? 'done' : '';
+      return `<button class="letter-pill ${cls}" data-l="${l}" aria-label="Letra ${l}">${l}</button>`;
+    }).join('');
+  }
+  function renderGoal(){
+    const s = D.stats();
+    document.getElementById('goal-letter').textContent = current;
+    document.getElementById('goal-name').textContent = current;
+    document.getElementById('ref-letter').textContent = current;
+    document.getElementById('ref-file').textContent = signFile(current);
+    document.getElementById('goal-done').textContent = s.done;
+    document.getElementById('goal-bar').style.width = (s.done/27*100)+'%';
+    // referencia
+    const img = document.getElementById('sign-img'), miss = document.getElementById('sign-missing');
+    img.style.display='block'; miss.style.display='none';
+    img.onerror = () => { img.style.display='none'; miss.style.display='flex'; };
+    img.src = 'signs/'+signFile(current)+'.png';
+    const cr=document.getElementById('cam-ref'); if(cr) cr.src='signs/'+signFile(current)+'.png';
+    const crl=document.getElementById('cam-ref-letter'); if(crl) crl.textContent=current;
+  }
+  function renderStats(){
+    const s = D.stats(), tot = D.totalSeconds();
+    document.getElementById('st-done').textContent = s.done;
+    document.getElementById('st-total').textContent = tot < 60 ? `${tot} s` : `${Math.round(tot/60)} min`;
+    document.getElementById('hd-streak').textContent = `${D.streak()} días`;
+  }
+  // ---------- Validación en vivo ----------
+  const HOLD = 16; let hold = 0, validating = false;
+
+  function setMeta(){
+    const hintEl=document.getElementById('val-hint'), titleEl=document.getElementById('val-title');
+    titleEl.innerHTML = `Imita la seña de “<span id="cam-ref-letter">${current}</span>”`;
+    if(R.hasModel()){
+      const trained = R.labels().indexOf(current)>=0;
+      hintEl.textContent = trained ? '' : 'Letra sin registrar — regístrala en “Entrenar” o usa “Marcar”.';
+    } else {
+      hintEl.textContent = 'Aún sin registros. Ve a “Entrenar” para activar el reconocimiento.';
+    }
+  }
+
+  function onFrame(payload){
+    if(validating) return;
+    const titleEl=document.getElementById('val-title'), pctEl=document.getElementById('val-pct'), barEl=document.getElementById('val-bar'), hintEl=document.getElementById('val-hint');
+    if(!payload){ hold=0; pctEl.textContent=''; barEl.style.width='0%'; titleEl.innerHTML='Muestra tu mano en el marco'; return; }
+
+    if(R.hasModel()){
+      const reg = R.labels().indexOf(current)>=0;
+      if(!reg){ hold=0; pctEl.textContent=''; barEl.style.width='0%'; titleEl.innerHTML=`“${current}” aún no está registrada`; hintEl.textContent='Regístrala en “Entrenar” o usa “Marcar”.'; return; }
+      const conf=R.probFor(current, payload.vec); const pct=Math.round(conf*100);
+      const det=R.predict(payload.vec);
+      pctEl.textContent=pct+'%'; hintEl.textContent='';
+      if(conf>=0.75) hold++; else hold=Math.max(0,hold-2);
+      barEl.style.width=Math.max(pct,Math.round(hold/HOLD*100))+'%';
+      barEl.style.background=conf>=0.75?'#6fffc4':'rgba(255,255,255,.5)';
+      titleEl.innerHTML = conf>=0.75 ? `¡Casi! Mantén “${current}”…` : `Imita la seña de “${current}”${det&&det.label!==current?` · detecto “${det.label}”`:''}`;
+      if(hold>=HOLD) validate(true);
+      return;
+    }
+
+    // sin registros todavía
+    hold=0; pctEl.textContent=''; barEl.style.width='0%';
+    titleEl.innerHTML=`“${current}” aún no está registrada`;
+    hintEl.textContent='Ve a “Entrenar” para registrar señas, o usa “Marcar”.';
+  }
+  function validate(auto){
+    validating = true; hold = 0;
+    const t=document.getElementById('val-title'), b=document.getElementById('val-bar'), p=document.getElementById('val-pct');
+    b.style.width='100%'; b.style.background='#6fffc4'; p.textContent='100%';
+    t.innerHTML = auto ? `✓ ¡Correcto! Hiciste la “${current}”` : `✓ Marcaste la “${current}”`;
+    D.markDone(current); renderStats();
+    setTimeout(() => { validating=false; setCurrent(D.nextPending()); }, 1100);
+  }
+  function setCurrent(l){ current = l; hold = 0; renderStrip(); renderGoal(); setMeta(); }
+
+  strip.addEventListener('click', e => { const b=e.target.closest('.letter-pill'); if(b) setCurrent(b.dataset.l); });
+
+  document.getElementById('mark-done').addEventListener('click', () => validate(false));
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    if(confirm('¿Borrar todo tu progreso guardado? Esto no se puede deshacer.')){ D.reset(); setCurrent(D.nextPending()); renderStats(); }
+  });
+
+  // ---------- Cámara real ----------
+  const cam = document.getElementById('cam'), video = document.getElementById('video');
+  const overlay = document.getElementById('cam-overlay'), chip = document.getElementById('cam-chip');
+  const bar = document.getElementById('cam-bar'), stopBtn = document.getElementById('cam-stop');
+  let stream = null, ticker = null, sessionSec = 0;
+
+  function showOverlay(icon, title, sub, btnIcon='videocam'){
+    overlay.style.display='flex';
+    document.getElementById('ov-title').textContent = title;
+    document.getElementById('ov-sub').textContent = sub;
+    document.querySelector('#start-btn .ms').textContent = btnIcon;
+  }
+
+  async function startCamera(){
+    // 1) Contexto seguro: file:// no permite cámara
+    if(!window.isSecureContext){
+      showOverlay('lock','La cámara necesita un servidor seguro',
+        'Abriste el archivo directamente. Sírvelo en http://localhost (mira la nota) y vuelve a abrir.','lock');
+      chip.innerHTML = '<span class="ms" style="font-size:16px;">lock</span> Sin contexto seguro';
+      return;
+    }
+    if(!navigator.mediaDevices?.getUserMedia){
+      showOverlay('error','Tu navegador no permite la cámara','Prueba con Chrome, Edge o Firefox actualizados.','error'); return;
+    }
+    chip.innerHTML = '<span class="ms" style="font-size:16px;">hourglass_top</span> Solicitando permiso…';
+    try{
+      stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'user', width:{ideal:1280}, height:{ideal:720} }, audio:false });
+      video.srcObject = stream;
+      cam.classList.add('live'); overlay.style.display='none'; bar.classList.remove('hidden'); stopBtn.classList.remove('hidden');
+      chip.innerHTML = '<span class="live-dot"></span> En vivo';
+      sessionSec = 0;
+      ticker = setInterval(() => { sessionSec++; D.addPracticeTime(1); document.getElementById('st-session').textContent = fmt(sessionSec); if(sessionSec%5===0) renderStats(); }, 1000);
+      SignRecognizer.start(video, document.getElementById('overlay'), onFrame);
+    }catch(err){
+      const denied = /NotAllowed|Permission|denied/i.test(err.name+err.message);
+      const noDev = /NotFound|Devices/i.test(err.name);
+      showOverlay('videocam_off',
+        denied ? 'Permiso de cámara denegado' : noDev ? 'No se encontró una cámara' : 'No se pudo iniciar la cámara',
+        denied ? 'Habilítala en el ícono de la barra de direcciones y reintenta.' : 'Revisa que tu cámara esté conectada y libre.','videocam');
+      chip.innerHTML = '<span class="ms" style="font-size:16px;">videocam_off</span> Sin cámara';
+    }
+  }
+  function stopCamera(){
+    if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+    if(ticker){ clearInterval(ticker); ticker=null; }
+    SignRecognizer.stop();
+    video.srcObject=null; cam.classList.remove('live'); bar.classList.add('hidden'); stopBtn.classList.add('hidden');
+    chip.innerHTML = '<span class="ms" style="font-size:16px;">videocam_off</span> Cámara apagada';
+    showOverlay('videocam','Cámara detenida','Enciéndela cuando quieras seguir practicando.','videocam');
+    renderStats();
+  }
+  document.getElementById('start-btn').addEventListener('click', startCamera);
+  stopBtn.addEventListener('click', stopCamera);
+  window.addEventListener('beforeunload', () => { if(stream) stream.getTracks().forEach(t=>t.stop()); });
+
+  // init
+  function updateBanner(){ document.getElementById('model-banner').classList.toggle('hidden', R.hasModel()); }
+  (async()=>{ await R.loadModel(); renderStrip(); renderGoal(); renderStats(); setMeta(); updateBanner(); })();
+</script>
 <script src="gesture-nav.js" defer></script>
-</body></html>
+</body>
+</html>

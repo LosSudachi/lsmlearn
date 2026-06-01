@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Entrenar · LSM Learn</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet"/>
+<style>
+  :root{--ink:#15182B;--muted:#6B7180;--paper:#FBFAF7;--card:#FFFFFF;--line:#ECE9E1;--line-2:#E2DFD6;
+    --blue:#1357E6;--blue-d:#0E47BD;--blue-t:#E7EEFF;--green:#0E9E6E;--green-t:#DCF7EC;--amber:#E8830C;--amber-t:#FDEAD2;--rose:#E5484D;--rose-t:#FCE4E4;--r-lg:24px;--r-md:18px;
+    --shadow:0 1px 2px rgba(21,24,43,.04),0 12px 30px -14px rgba(21,24,43,.14);--shadow-lg:0 2px 4px rgba(21,24,43,.05),0 34px 64px -28px rgba(21,24,43,.24);}
+  *{box-sizing:border-box;} html,body{margin:0;overflow-x:hidden;}
+  body{background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  .disp{font-family:'Bricolage Grotesque','Plus Jakarta Sans',sans-serif;font-weight:700;letter-spacing:-.02em;}
+  .ms{font-family:'Material Symbols Rounded';line-height:1;display:inline-block;}.ms.fill{font-variation-settings:'FILL' 1;}
+  .bg-deco{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;}
+  .bg-deco span{position:absolute;border-radius:9999px;filter:blur(80px);opacity:.5;}
+  .bg-deco .b1{width:480px;height:480px;left:-160px;top:-120px;background:radial-gradient(circle,#cfe0ff,transparent 70%);}
+  .bg-deco .b2{width:440px;height:440px;right:-140px;bottom:-160px;background:radial-gradient(circle,#d6f5e6,transparent 70%);}
+  .nav-link{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;color:var(--muted);font-weight:600;font-size:14px;text-decoration:none;position:relative;transition:.18s;}
+  .nav-link:hover{background:#fff;color:var(--ink);}.nav-link .ms{font-size:22px;}
+  .nav-link.active{background:var(--blue-t);color:var(--blue-d);}
+  .nav-link.active::before{content:"";position:absolute;left:-3px;top:50%;transform:translateY(-50%);width:4px;height:22px;border-radius:9999px;background:var(--blue);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-family:inherit;font-weight:700;border-radius:14px;transition:transform .12s,background .18s,opacity .18s;}
+  .btn:active{transform:scale(.97);} .btn:disabled{opacity:.45;cursor:not-allowed;}
+  .btn-primary{background:var(--blue);color:#fff;padding:12px 18px;box-shadow:0 10px 24px -10px rgba(19,87,230,.7);}
+  .btn-primary:hover:not(:disabled){background:var(--blue-d);}
+  .btn-soft{background:#fff;color:var(--ink);border:1px solid var(--line-2);padding:11px 16px;}
+  .wrap{display:flex;flex-wrap:wrap;gap:22px;max-width:1180px;margin:0 auto;}
+  .col-main{flex:3 1 440px;min-width:0;display:flex;flex-direction:column;gap:18px;}
+  .col-side{flex:1 1 300px;min-width:0;max-width:380px;display:flex;flex-direction:column;gap:18px;}
+  .cam{position:relative;width:100%;aspect-ratio:16/10;border-radius:var(--r-lg);overflow:hidden;background:radial-gradient(120% 120% at 50% 0%,#1c2540,#0c1124 60%,#080b18);box-shadow:var(--shadow-lg);}
+  .cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:none;}
+  .cam.live video{display:block;} .cam canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;}
+  .glass{background:rgba(11,16,33,.6);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);}
+  .live-dot{width:8px;height:8px;border-radius:9999px;background:#6fffc4;animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(111,255,196,.55);}70%{box-shadow:0 0 0 9px rgba(111,255,196,0);}100%{box-shadow:0 0 0 0 rgba(111,255,196,0);}}
+  .lp{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;border:1px solid var(--line-2);background:#fff;color:var(--muted);cursor:pointer;position:relative;transition:.15s;}
+  .lp.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .lp.some{border-color:var(--amber);color:var(--amber);} .lp.ok{background:var(--green-t);border-color:#bfeeda;color:var(--green);}
+  .lp b{position:absolute;bottom:-6px;right:-6px;font-size:9px;background:var(--ink);color:#fff;border-radius:9999px;padding:1px 4px;font-family:'Plus Jakarta Sans';}
+  .track{height:8px;border-radius:9999px;background:var(--line);overflow:hidden;}.track>div{height:100%;border-radius:9999px;background:var(--blue);transition:width .2s;}
+  ::-webkit-scrollbar{height:8px;width:8px;}::-webkit-scrollbar-thumb{background:#d9d5cb;border-radius:9999px;}
+</style>
+</head>
+<body>
+<div class="bg-deco"><span class="b1"></span><span class="b2"></span></div>
+
+<aside class="fixed left-0 top-0 h-full z-40 flex flex-col bg-white/70 backdrop-blur-xl border-r border-[var(--line)] w-20 md:w-64">
+  <div class="flex items-center gap-2 px-5 h-20">
+    <div class="w-10 h-10 rounded-xl bg-[var(--blue)] text-white flex items-center justify-center shadow-[0_8px_18px_-8px_rgba(19,87,230,.8)]"><span class="ms fill" style="font-size:24px;">sign_language</span></div>
+    <span class="disp text-xl hidden md:block">LSM Learn</span>
+  </div>
+  <nav class="flex-1 flex flex-col gap-1.5 px-3 mt-2">
+    <a class="nav-link" href="index.html"><span class="ms">model_training</span><span class="hidden md:block">Práctica</span></a>
+    <a class="nav-link" href="diccionario.html"><span class="ms">menu_book</span><span class="hidden md:block">Biblioteca</span></a>
+    <a class="nav-link" href="progreso.html"><span class="ms">monitoring</span><span class="hidden md:block">Progreso</span></a>
+    <a class="nav-link active" href="entrenar.html"><span class="ms fill">tune</span><span class="hidden md:block">Entrenar</span></a>
+  </nav>
+</aside>
+
+<header class="fixed top-0 right-0 left-20 md:left-64 h-20 px-5 md:px-8 flex items-center justify-between z-30 bg-[var(--paper)]/85 backdrop-blur-md border-b border-[var(--line)]">
+  <div><p class="text-[var(--muted)] text-[11px] font-semibold uppercase tracking-wider mb-0.5">Reconocimiento</p><h1 class="disp text-xl md:text-2xl leading-none">Entrenar señas</h1></div>
+  <div id="model-state" class="text-xs font-bold px-3 py-2 rounded-full" style="background:var(--amber-t);color:var(--amber);">0 letras registradas</div>
+</header>
+
+<main class="ml-20 md:ml-64 pt-20 min-h-screen">
+  <div class="px-5 md:px-8 py-6">
+    <div class="card p-4 mb-5" style="border-radius:var(--r-md);background:var(--blue-t);border-color:#d4e0ff;">
+      <p class="text-sm font-semibold text-[var(--blue-d)] flex items-center gap-2"><span class="ms">bolt</span> Cada letra se registra por separado</p>
+      <p class="text-sm text-[var(--muted)] mt-1 leading-relaxed">Enciende la cámara, elige una letra, imítala mirando la referencia y pulsa <b>Grabar</b> (mueve un poco la mano para variar el ángulo). En cuanto termines, <b>esa letra ya queda registrada y se reconoce en Práctica</b> — no necesitas grabar las demás ni un paso extra. Con 20–40 muestras por letra funciona bien.</p>
+    </div>
+
+    <div class="wrap">
+      <div class="col-main">
+        <div class="cam" id="cam">
+          <video id="video" playsinline autoplay muted></video><canvas id="overlay"></canvas>
+          <div class="absolute top-3 left-3 right-3 flex items-center justify-between">
+            <div class="glass rounded-full px-3 py-1.5 flex items-center gap-2 text-white text-xs font-semibold" id="cam-chip"><span class="ms" style="font-size:16px;">videocam_off</span> Cámara apagada</div>
+            <button class="glass rounded-full w-9 h-9 flex items-center justify-center text-white hidden" id="cam-stop" aria-label="Detener"><span class="ms" style="font-size:18px;">stop</span></button>
+          </div>
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-6" id="cam-overlay">
+            <button id="start-btn" class="rounded-full bg-white text-[var(--blue)] flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-transform mb-4" style="width:72px;height:72px;"><span class="ms fill" style="font-size:38px;">videocam</span></button>
+            <h3 class="disp text-white text-lg" id="ov-title">Enciende la cámara para grabar</h3>
+            <p class="text-white/70 text-sm mt-1 max-w-xs" id="ov-sub">Te pedirá permiso. Sírvelo en http://localhost.</p>
+          </div>
+          <div class="absolute bottom-3 left-3 right-3 glass rounded-2xl p-3 hidden" id="rec-bar">
+            <div class="flex items-center justify-between gap-3">
+              <div class="min-w-0"><p class="text-white text-sm font-bold truncate" id="rec-title">Grabando “A”…</p><p class="text-white/60 text-xs">Mantén y varía un poco la mano</p></div>
+              <p class="disp text-white text-lg flex-none" id="rec-count">0</p>
+            </div>
+            <div class="track mt-2" style="background:rgba(255,255,255,.2);"><div id="rec-prog" style="background:#6fffc4;width:0%"></div></div>
+          </div>
+          <div class="absolute bottom-3 left-3 right-3 glass rounded-2xl p-3 hidden" id="test-bar">
+            <p class="text-white/60 text-xs">Detectado en vivo</p>
+            <p class="disp text-white text-2xl" id="test-out">—</p>
+          </div>
+        </div>
+
+        <div class="card p-4" style="border-radius:var(--r-md);">
+          <div class="flex items-center justify-between mb-3"><p class="text-sm font-bold">Letras (toca para elegir)</p><span class="text-xs text-[var(--muted)]"><span id="ready-count">0</span>/27 con datos</span></div>
+          <div class="flex flex-wrap gap-2.5" id="grid"></div>
+        </div>
+      </div>
+
+      <div class="col-side">
+        <div class="card overflow-hidden">
+          <div class="flex items-center justify-between p-4 pb-2"><h3 class="disp text-base">Seña “<span id="sel-letter">A</span>”</h3><span id="sel-count" class="text-xs font-bold text-[var(--muted)]">0 muestras</span></div>
+          <div class="mx-4 rounded-2xl overflow-hidden bg-[#eef3ff]" style="aspect-ratio:1;"><img id="ref-img" src="signs/A.png" alt="Seña" style="width:100%;height:100%;object-fit:contain;padding:10px;"></div>
+          <div class="p-4 flex flex-col gap-2.5">
+            <button class="btn btn-primary w-full" id="rec-btn" disabled><span class="ms" style="font-size:20px;">fiber_manual_record</span> Grabar muestras</button>
+            <button class="btn btn-soft w-full" id="del-btn"><span class="ms" style="font-size:18px;">delete</span> Borrar muestras de esta letra</button>
+          </div>
+        </div>
+
+        <div class="card p-5">
+          <h3 class="disp text-base mb-3">Reconocimiento</h3>
+          <button class="btn btn-soft w-full" id="test-btn" disabled><span class="ms" style="font-size:18px;">visibility</span> Probar en vivo</button>
+          <div class="flex gap-2.5 mt-2.5">
+            <button class="btn btn-soft flex-1" id="export-btn" disabled><span class="ms" style="font-size:18px;">download</span> Exportar</button>
+            <button class="btn btn-soft flex-1" id="import-btn"><span class="ms" style="font-size:18px;">upload</span> Importar</button>
+          </div>
+          <input type="file" id="import-file" accept="application/json,.json" style="display:none">
+          <p class="text-[11px] text-[var(--muted)] mt-2 leading-snug">Para trabajo en equipo: <b>Exporta</b> un <code>samples.json</code> y compártelo; los demás lo <b>Importan</b> y siguen grabando partiendo de lo que ya hay. (También puedes dejar el archivo en <code>models/</code> para que cargue solo.)</p>
+        </div>
+
+        <button class="btn btn-soft w-full" id="clear-btn" style="color:var(--rose);border-color:#f3c9c9;"><span class="ms" style="font-size:18px;">restart_alt</span> Borrar todos los registros</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="lsm-data.js"></script>
+<script src="sign-recognizer.js"></script>
+<script>
+  const R = window.SignRecognizer, D = window.LSMData;
+  const ALPHABET = D.ALPHABET, MIN = 12, TARGET = 40;
+  const fileFor = l => l==='Ñ' ? 'Ntilde' : l;
+  let current='A', recording=false, testing=false, recBuffer=[];
+
+  const grid=document.getElementById('grid');
+  function renderGrid(){
+    let ready=0;
+    grid.innerHTML = ALPHABET.map(l=>{ const c=R.countFor(l); if(c>=MIN) ready++;
+      const cls = l===current?'active':c>=MIN?'ok':c>0?'some':'';
+      return `<button class="lp ${cls}" data-l="${l}">${l}${c>0?`<b>${c}</b>`:''}</button>`; }).join('');
+    document.getElementById('ready-count').textContent = ALPHABET.filter(l=>R.countFor(l)>0).length;
+    setState();
+  }
+  function setState(){ const n=R.registeredLetters().length; const el=document.getElementById('model-state');
+    el.textContent = n+' letras registradas';
+    el.style.background = n>0?'var(--green-t)':'var(--amber-t)'; el.style.color = n>0?'var(--green)':'var(--amber)';
+    document.getElementById('test-btn').disabled = n===0 || !stream;
+    document.getElementById('export-btn').disabled = n===0;
+  }
+  function selectLetter(l){ current=l; document.getElementById('sel-letter').textContent=l;
+    document.getElementById('sel-count').textContent=R.countFor(l)+' muestras';
+    document.getElementById('ref-img').src='signs/'+fileFor(l)+'.png'; renderGrid(); }
+  grid.addEventListener('click',e=>{ const b=e.target.closest('.lp'); if(b&&!recording) selectLetter(b.dataset.l); });
+
+  // Cámara
+  const cam=document.getElementById('cam'), video=document.getElementById('video'), overlay=document.getElementById('overlay');
+  const chip=document.getElementById('cam-chip'), ov=document.getElementById('cam-overlay'), stopBtn=document.getElementById('cam-stop');
+  let stream=null;
+  async function startCam(){
+    if(!window.isSecureContext){ document.getElementById('ov-title').textContent='Necesita servidor seguro'; document.getElementById('ov-sub').textContent='Ábrelo en http://localhost, no como archivo.'; return; }
+    if(!navigator.mediaDevices?.getUserMedia){ document.getElementById('ov-title').textContent='Navegador no compatible'; return; }
+    chip.innerHTML='<span class="ms" style="font-size:16px;">hourglass_top</span> Permiso…';
+    try{ stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:720}},audio:false});
+      video.srcObject=stream; cam.classList.add('live'); ov.style.display='none'; stopBtn.classList.remove('hidden');
+      chip.innerHTML='<span class="live-dot"></span> En vivo'; document.getElementById('rec-btn').disabled=false; setState();
+      R.start(video, overlay, onFrame);
+    }catch(err){ document.getElementById('ov-title').textContent='No se pudo abrir la cámara'; document.getElementById('ov-sub').textContent='Revisa el permiso e inténtalo de nuevo.'; chip.innerHTML='<span class="ms" style="font-size:16px;">videocam_off</span> Sin cámara'; }
+  }
+  function stopCam(){ if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;} R.stop(); video.srcObject=null; cam.classList.remove('live'); stopBtn.classList.add('hidden'); chip.innerHTML='<span class="ms" style="font-size:16px;">videocam_off</span> Cámara apagada'; ov.style.display='flex'; document.getElementById('ov-title').textContent='Cámara detenida'; document.getElementById('rec-btn').disabled=true; setState(); }
+  document.getElementById('start-btn').addEventListener('click', startCam);
+  stopBtn.addEventListener('click', stopCam);
+  window.addEventListener('beforeunload', ()=>{ if(stream) stream.getTracks().forEach(t=>t.stop()); });
+
+  function onFrame(p){
+    if(p && recording){ recBuffer.push(p.vec); const c=recBuffer.length;
+      document.getElementById('rec-count').textContent=c; document.getElementById('rec-prog').style.width=Math.min(c/TARGET*100,100)+'%';
+      if(c>=TARGET) stopRec(); }
+    if(testing){ if(!p){ document.getElementById('test-out').textContent='—'; return; }
+      const r=R.predict(p.vec); document.getElementById('test-out').textContent = r?`${r.label}  ·  ${Math.round(r.prob*100)}%`:'—'; }
+  }
+
+  const recBtn=document.getElementById('rec-btn');
+  function startRec(){ if(!stream) return; recording=true; recBuffer=[];
+    document.getElementById('test-bar').classList.add('hidden'); document.getElementById('rec-bar').classList.remove('hidden');
+    document.getElementById('rec-title').textContent='Grabando “'+current+'”…'; document.getElementById('rec-count').textContent='0'; document.getElementById('rec-prog').style.width='0%';
+    recBtn.innerHTML='<span class="ms" style="font-size:20px;">stop</span> Detener'; }
+  function stopRec(){ recording=false; document.getElementById('rec-bar').classList.add('hidden');
+    recBtn.innerHTML='<span class="ms" style="font-size:20px;">fiber_manual_record</span> Grabar muestras';
+    if(recBuffer.length){ R.addSamples(current, recBuffer); recBuffer=[]; }
+    selectLetter(current); }
+  recBtn.addEventListener('click', ()=> recording?stopRec():startRec());
+
+  document.getElementById('del-btn').addEventListener('click', ()=>{ R.clearLetter(current); selectLetter(current); });
+  document.getElementById('clear-btn').addEventListener('click', ()=>{ if(confirm('¿Borrar TODOS los registros grabados?')){ R.clearAll(); selectLetter(current); } });
+
+  document.getElementById('test-btn').addEventListener('click', ()=>{ testing=!testing;
+    document.getElementById('test-bar').classList.toggle('hidden', !testing);
+    document.getElementById('test-btn').innerHTML = testing?'<span class="ms" style="font-size:18px;">visibility_off</span> Detener prueba':'<span class="ms" style="font-size:18px;">visibility</span> Probar en vivo'; });
+
+  document.getElementById('export-btn').addEventListener('click', ()=>{
+    const data = localStorage.getItem(R.SKEY) || '{}';
+    const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([data],{type:'application/json'})); a.download='samples.json'; a.click();
+    alert('Descargué samples.json. Compártelo con tu equipo: ellos lo Importan y siguen grabando sobre lo que ya hay. (También puedes ponerlo en la carpeta "models/" para que cargue solo.)');
+  });
+
+  document.getElementById('import-btn').addEventListener('click', ()=> document.getElementById('import-file').click());
+  document.getElementById('import-file').addEventListener('change', async (e)=>{
+    const file=e.target.files[0]; if(!file) return;
+    try{
+      const data=JSON.parse(await file.text());
+      let muestras=0, letras=0;
+      for(const L in data){ if(Array.isArray(data[L]) && data[L].length){ R.addSamples(L, data[L]); muestras+=data[L].length; letras++; } }
+      selectLetter(current);
+      alert('Importadas '+muestras+' muestras de '+letras+' letras. Se sumaron a tus registros; sigue grabando para mejorarlas.');
+    }catch(err){ alert('Archivo inválido. Debe ser un samples.json exportado desde aquí.'); }
+    e.target.value='';
+  });
+
+  (async()=>{ await R.loadModel(); selectLetter('A'); })();
+</script>
+<script src="gesture-nav.js" defer></script>
+</body>
+</html>
