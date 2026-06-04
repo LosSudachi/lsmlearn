@@ -23,7 +23,12 @@
     async loadModel(){
       let raw=this._loadRaw();
       if(!Object.keys(raw).length){
-        try{ const r=await fetch('models/samples.json'); if(r.ok){ raw=await r.json(); localStorage.setItem(SKEY, JSON.stringify(raw)); } }catch{}
+        for(const path of ['samples.json', 'models/samples.json']){
+          try{
+            const r=await fetch(path);
+            if(r.ok){ raw=await r.json(); localStorage.setItem(SKEY, JSON.stringify(raw)); break; }
+          }catch{}
+        }
       }
       this._index(raw);
       return this.registeredLetters().length>0;
