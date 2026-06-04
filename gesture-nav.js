@@ -9,8 +9,7 @@
     // Deslizamiento (mano abierta)
     smoothing: 0.55, windowMs: 380, minTravel: 0.16, minVelocity: 0.0006,
     verticalDominance: 1.25, cooldownMs: 1000,
-    // Salto por dedos (1–3 dedos sostenidos)
-    fingerDwellMs: 650,          // tiempo que hay que sostener los dedos
+    // Mano quieta
     stillSpeed: 0.0010,          // velocidad máx. para considerar la mano "quieta"
     // MediaPipe
     minDetectionConfidence: 0.75, minTrackingConfidence: 0.75, modelComplexity: 1,
@@ -161,7 +160,7 @@
         <circle class="bar" cx="20" cy="20" r="16" fill="none" stroke-width="4" stroke-linecap="round"
           stroke-dasharray="100.5" stroke-dashoffset="100.5"></circle></svg>
         <div class="ico">✋</div></div>
-      <div class="txt"><b data-title>Listo</b><span data-sub>Mano abierta o muestra dedos</span></div>`;
+      <div class="txt"><b data-title>Listo</b><span data-sub>Mano abierta para desplazarte</span></div>`;
     document.body.appendChild(b);
     ui.badge = b; ui.badgeBar = b.querySelector('.bar'); ui.badgeIco = b.querySelector('.ico');
     ui.badgeTitle = b.querySelector('[data-title]'); ui.badgeSub = b.querySelector('[data-sub]');
@@ -174,7 +173,6 @@
     g.innerHTML = `
       <h4>Gestos de mano</h4>
       <div class="row"><span class="gi">✋↕</span><div class="gt"><b>Mano abierta</b><span>Desliza ↑ siguiente · ↓ anterior</span></div></div>
-      <div class="row"><span class="gi">☝</span><div class="gt"><b>1·2·3 dedos</b><span>Vas directo a esa sección</span></div></div>
       <div class="dots">${dots}</div>`;
     document.body.appendChild(g);
     ui.guide = g;
@@ -227,26 +225,11 @@
     const fingers = countFingers(lm);
     const inCooldown = now - lastTriggerAt < CFG.cooldownMs;
 
-    /* --- MODO DEDOS: 1–3 dedos sostenidos y mano quieta → salto directo --- */
+    /* --- DEDOS 1–3: ya no navegan entre páginas --- */
     if (fingers >= 1 && fingers <= 3 && speed < CFG.stillSpeed) {
-      buffer = []; // no interfiere con el deslizamiento
-      if (fingers !== fingerCount) { fingerCount = fingers; fingerSince = now; }
-      const dwell = now - fingerSince;
-      const target = PAGES[fingers - 1];
-      const isCurrent = (fingers - 1) === currentIndex();
-      const progress = Math.min(dwell / CFG.fingerDwellMs, 1);
-
-      if (isCurrent) {
-        showBadge({ title:`Ya estás en ${PAGE_LABELS[target]}`, sub:`${fingers} dedo(s)`, icon:'✓', bg:'rgba(10,18,35,.8)', progress:0 });
-        return;
-      }
-      if (inCooldown) { showBadge({ title:'Un momento…', sub:'Evitando dobles cambios', icon:'⏱', bg:'rgba(10,18,35,.8)', progress:0 }); return; }
-      if (progress >= 1) {
-        lastTriggerAt = now; resetEngine();
-        showBadge({ title:`Abriendo ${PAGE_LABELS[target]}`, sub:`Mostraste ${fingers} dedo(s)`, icon:PAGE_ICONS[target], bg:'rgba(0,90,190,.92)', progress:1 });
-        navTo(target); return;
-      }
-      showBadge({ title:`Yendo a ${PAGE_LABELS[target]}`, sub:`Mantén ${fingers} dedo(s)…`, icon:'☝', bg:'rgba(0,108,73,.86)', progress });
+      buffer = [];
+      fingerCount = 0; fingerSince = 0;
+      showBadge({ title:'Seña detectada', sub:'Usa mano abierta para desplazarte', icon:'☝', bg:'rgba(0,108,73,.86)', progress:0 });
       return;
     }
     fingerCount = 0; fingerSince = 0;
@@ -275,7 +258,7 @@
 
     // Mano cerrada / en transición
     buffer = [];
-    showBadge({ title:'Mano detectada', sub:'Abre la mano o muestra dedos', icon:'✊', bg:'rgba(10,18,35,.78)', progress:0 });
+    showBadge({ title:'Mano detectada', sub:'Abre la mano para desplazarte', icon:'✊', bg:'rgba(10,18,35,.78)', progress:0 });
   };
 
   /* ---- MediaPipe lifecycle ----------------------------------------------- */
@@ -317,7 +300,7 @@
       await camera.start();
       running = true; booting = false; safeSet(LS_ENABLED,'1'); setFabState('on');
       ui.guide.classList.add('show');
-      showBadge({ title:'Gestos activos', sub:'Mano abierta o muestra dedos', icon:'✋', bg:'rgba(0,108,73,.88)', progress:0 });
+      showBadge({ title:'Gestos activos', sub:'Mano abierta para desplazarte', icon:'✋', bg:'rgba(0,108,73,.88)', progress:0 });
     } catch (err) {
       booting = false; running = false; console.warn('gesture-nav:', err); setFabState('off');
       const denied = /permission|denied|NotAllowed/i.test(String(err && err.name) + String(err && err.message));
@@ -365,13 +348,12 @@
           <button class="x" data-skip aria-label="Cerrar">✕</button>
           <span class="wave">🧭</span>
           <h2 class="lsm-head">Cómo moverte por LSM Learn</h2>
-          <p>Tienes cuatro formas de cambiar de sección. Usa la que más te acomode.</p>
+          <p>Tienes tres formas de cambiar de sección. Usa la que más te acomode.</p>
         </div>
         <div class="lsm-methods">
           <div class="lsm-m"><div class="mi">👆</div><div class="mc"><b>Toca el menú lateral</b><span>El método de siempre, a la izquierda. Siempre disponible.</span></div></div>
           <div class="lsm-m"><div class="mi">⌨️</div><div class="mc"><b>Teclado</b><span>Presiona <span class="lsm-kbd">1</span> <span class="lsm-kbd">2</span> <span class="lsm-kbd">3</span> para ir directo a Práctica, Biblioteca o Progreso.</span></div></div>
           <div class="lsm-m is-cam"><div class="mi">✋</div><div class="mc"><b>Mano abierta (gesto)</b><span>Deslízala hacia <strong>arriba</strong> para la siguiente sección o hacia <strong>abajo</strong> para la anterior.</span></div></div>
-          <div class="lsm-m is-cam"><div class="mi">☝️</div><div class="mc"><b>Muestra dedos (gesto)</b><span>Levanta <strong>1, 2 o 3</strong> dedos y mantén un instante: vas directo a esa sección.</span></div></div>
         </div>
         <div class="lsm-foot">${foot}</div>
       </div>`;
